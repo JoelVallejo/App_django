@@ -15,9 +15,13 @@
       <li>
         <a href="/registro">registro</a>
       </li>
+
+      {% if user.is_authenticated %}
       <li>
-        <a href="/login">login</a>
+        <a href="/salir">salir</a>
       </li>
+      {% endif %}
+
     </ul>
   </nav>
   <main>

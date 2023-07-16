@@ -1,17 +1,23 @@
 --CREATE DATABASE db_cuentasxpagar;
 
 --DROP DATABASE db_cuentasxpagar;
+
 --CREATE USER user_admin WITH ENCRYPTED PASSWORD '12345';
+
 --ALTER ROLE user_admin SET client_encoding TO 'utf8';
+
 --ALTER ROLE user_admin SET default_transaction_isolation TO 'read committed';
+
 --ALTER ROLE user_admin SET timezone TO 'UTC -5';
+
 --GRANT ALL PRIVILEGES ON DATABASE db_cuentasxpagar TO user_admin;
+
 DROP TABLE if EXISTS roles CASCADE;
 
 DROP table if exists empresas;
 
 DROP TABLE if EXISTS usuarios;
-SELECT * FROM auth_user;
+
 CREATE TABLE
     empresas(
         id_empresa SERIAL not null,
@@ -61,6 +67,7 @@ create table
         direccion character varying(80) not null,
         email character varying(50) not null,
         fecha_creacion timestamp not null default now(),
+        fecha_acceso timestamp not null,
         estado char(1) default 'A',
         rol integer not null,
         constraint fk_usuarios foreign key (rol) references roles(id_rol) on update cascade on delete restrict

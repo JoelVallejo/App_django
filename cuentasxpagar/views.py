@@ -26,7 +26,6 @@ def Registro(request):
                 user = User.objects.create_user(username=request.POST['username'],
                                                 password=request.POST['password2'])
                 user.save()
-                login(request, user)
                 return redirect('login')
             except IntegrityError:
                 return render(request, 'registro.html', {
@@ -54,7 +53,7 @@ def Login(request):
                                                 password=request.POST['password2'])
                 user.save()
                 login(request, user)
-                return redirect('login')
+                return redirect('cuentasxpagar')
             except IntegrityError:
                 return render(request, 'login.html', {
                     'form': UserCreationForm,
@@ -65,3 +64,6 @@ def Login(request):
             'form': UserCreationForm,
             "error": 'Password no coinciden'
         })
+
+def CuentaP(request):
+    return render(request, 'cuentasxpagar.html')
