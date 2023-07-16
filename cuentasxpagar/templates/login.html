@@ -1,1 +1,14 @@
-<h1>LOGIN</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>login</h1>
+
+  {{error}}
+  <form method="POST">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type="submit">INICIAR SECION</button>
+  </form>
+{% endblock %}

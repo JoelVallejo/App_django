@@ -41,4 +41,27 @@ def Registro(request):
 
 
 def Login(request):
-    return render(request, 'login.html')
+    if request.method == 'GET':
+        return render(request, 'login.html', {
+            'form': UserCreationForm
+        })
+
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                # registro
+                user = User.objects.create_user(username=request.POST['username'],
+                                                password=request.POST['password2'])
+                user.save()
+                login(request, user)
+                return redirect('login')
+            except IntegrityError:
+                return render(request, 'login.html', {
+                    'form': UserCreationForm,
+                    "error": 'Usuario ya creado!!'
+                })
+
+        return render(request, 'login.html', {
+            'form': UserCreationForm,
+            "error": 'Password no coinciden'
+        })
