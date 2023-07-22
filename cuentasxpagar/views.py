@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.db import IntegrityError
 
 # Create your views here.
@@ -26,6 +26,7 @@ def Registro(request):
                 user = User.objects.create_user(username=request.POST['username'],
                                                 password=request.POST['password2'])
                 user.save()
+                login(request, user)
                 return redirect('login')
             except IntegrityError:
                 return render(request, 'registro.html', {
@@ -40,30 +41,15 @@ def Registro(request):
 
 
 def Login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html', {
-            'form': UserCreationForm
-        })
+    return render(request, 'login.html', {
+        'form': AuthenticationForm
+    })
 
-    else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                # registro
-                user = User.objects.create_user(username=request.POST['username'],
-                                                password=request.POST['password2'])
-                user.save()
-                login(request, user)
-                return redirect('cuentasxpagar')
-            except IntegrityError:
-                return render(request, 'login.html', {
-                    'form': UserCreationForm,
-                    "error": 'Usuario ya creado!!'
-                })
-
-        return render(request, 'login.html', {
-            'form': UserCreationForm,
-            "error": 'Password no coinciden'
-        })
 
 def CuentaP(request):
     return render(request, 'cuentasxpagar.html')
+
+
+def salir(request):
+    logout(request)
+    return redirect('home')

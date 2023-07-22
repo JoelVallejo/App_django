@@ -15,7 +15,7 @@
 <body>
   <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/home">
+      <a class="navbar-item" href="/">
         <img src="{% static 'images/favicon.png' %}" width="112" height="28">
       </a>
 
@@ -62,19 +62,24 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a href="/login" class="button is-primary is-outlined">
-              <strong>Login</strong>
-            </a>
+
             {% if user.is_authenticated %}
             <a href="/salir" class="button is-danger is-outlined">
               <b>Salir</b>
+            </a>
+            {% else %}
+            <a href="/registro" class="button is-primary is-outlined">
+              <strong>Registro</strong>
+            </a>
+            <a href="/login" class="button is-primary is-outlined">
+              <strong>Login</strong>
             </a>
             {% endif %}
           </div>
   </nav>
   <main>
     {% block content %}
-    
+
     {% endblock %}
   </main>
 </body>
